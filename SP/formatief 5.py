@@ -1,22 +1,10 @@
 def sorteren():
-    LijstMetGetallen = [5, 2, 6, 9, 4, 1, 14, 3, 10, 8]
+    getallenlijst = [5, 6, 2, 4, 1, 4, 7, 9, 3]
 
-    GesoorteerdeLijst = []
-    GesoorteerdeLijst.append(LijstMetGetallen[0])
-    LijstMetGetallen.pop(0)
-    counter = 0
-    while counter < (len(LijstMetGetallen) + 1):
-        if LijstMetGetallen[0] >= GesoorteerdeLijst[0]:
-            GesoorteerdeLijst.append(LijstMetGetallen[0])
-            LijstMetGetallen.pop(0)
-            counter += 1
-        elif LijstMetGetallen[0] <= GesoorteerdeLijst[0]:
-            GesoorteerdeLijst.insert(0, LijstMetGetallen[0])
-            LijstMetGetallen.pop(0)
-            counter += 1
-
-    print(GesoorteerdeLijst)
+    for getal in range(len(getallenlijst)-1, 0, -1):
+        for x in range(getal):
+            if getallenlijst[x] > getallenlijst[x + 1]:
+                getallenlijst[x + 1], getallenlijst[x] = getallenlijst[x], getallenlijst[x + 1]
+    print(getallenlijst)
 
 sorteren()
-
-#niet af, maar de deadline kwam eraan
