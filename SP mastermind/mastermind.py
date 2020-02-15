@@ -83,9 +83,3 @@ def play_mastermind():
     player_or_computer()
 
 play_mastermind()
-#genereer_code(teGokkenCode, kleuren)
-#geef_code(teGokkenCode)
-#print(teGokkenCode) #moet nog weggehaald worden
-#speler_gok(gegokteCode)
-#feedback(gegokteCode, teGokkenCode)
-#teGokkenCode.clear()
