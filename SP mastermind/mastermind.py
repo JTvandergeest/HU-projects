@@ -1,4 +1,5 @@
 import random
+import math
 
 kleuren = ["blauw", "rood", "geel", "groen", "wit", "zwart"]
 teGokkenCode = []
@@ -11,8 +12,12 @@ def genereer_code(y,z):
     return y
 
 def geef_code(y):
-    print("Geef een code.")
-    y = input().split(" ")
+    print("Geef een code. De mogelijke kleuren zijn: 'blauw, rood, geel, groen, wit en zwart'. "
+          "Kies een code van 4 kleuren met een spatie tussen 2 kleuren. "
+          "Gebruik exclusief kleine letters.")
+    x = input().split(" ")
+    for i in range(len(x)):
+        y.append(x[i])
     return y
 
 def speler_gok(y):
@@ -23,11 +28,9 @@ def speler_gok(y):
     for i in range(0,11):
         print("Doe een gok.")
         y = input().split(" ")
-        tempcode = y
         check(y, teGokkenCode)
         print("Jouw gok: ", y)
         print(feedback(y, teGokkenCode))
-        y = tempcode
 
     print("Helaas, je gokken zijn op. De code was: ", teGokkenCode)
 
@@ -38,10 +41,43 @@ def check(y, x):
     else:
         print("Dat is helaas niet de juiste code.")
 
-def computer_gok():
-    mogelijkeCodes = []
-    
 
+def a_simple_strategy(y, z):
+    possibleCombinations = []
+    # possibleFeedback = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [2, 0], [2, 1], [2, 2], [3, 0], [4, 0]]
+
+    for ii in range(6 ** 4):
+        index0 = math.floor(ii / (6 ** 3)) % 6
+        index1 = math.floor(ii/ (6 ** 2)) % 6
+        index2 = math.floor(ii / 6) % 6
+        index3 = ii % 6
+
+        singleCombination = (y[index0] + " " + y[index1] + " " + y[index2] + " " + y[index3]).split(" ")
+        possibleCombinations.append([singleCombination])
+
+    for i in range(0, 20):
+        if len(possibleCombinations) > 2:
+            z = possibleCombinations[random.randint(0, len(possibleCombinations))][0]
+        else:
+            z = possibleCombinations[random.randint(0,1)][0]
+        print("Computer gok: ", z)
+        if z == teGokkenCode:
+            print("Dat is de juiste code, gefeliciteerd!")
+            exit()
+        else:
+            print("Dat is helaas niet de juiste code.")
+
+        fb = feedback(z, teGokkenCode).copy()
+
+        for iii in range(len(possibleCombinations)):
+            if feedback(possibleCombinations[iii][0], z) != fb:
+                possibleCombinations[iii] = 0
+        print(possibleCombinations)
+
+        while 0 in possibleCombinations:
+            possibleCombinations.remove(0)
+
+    print("Helaas, dat was de laatste gok. De code was: ", teGokkenCode)
 
 def feedback(y, x):
     blackpin = 0
@@ -62,7 +98,7 @@ def feedback(y, x):
             code[z] = 0
             gok[i2] = 1
 
-    pinnetjes = ["B", blackpin, "W", whitepin]
+    pinnetjes = [blackpin, whitepin]
     return pinnetjes
 
 def player_or_computer():
@@ -73,6 +109,7 @@ def player_or_computer():
     if keuze == "x":
         geef_code(teGokkenCode)
         #computer_gok()
+        a_simple_strategy(kleuren, gegokteCode)
 
     if keuze == "y":
         genereer_code(teGokkenCode, kleuren)
@@ -83,3 +120,19 @@ def play_mastermind():
     player_or_computer()
 
 play_mastermind()
+
+
+
+
+
+
+"""def computer_gok(gok):
+    possibleFeedback = [[0,0],[0,1],[0,2].[0,3],[0,4],[1,0],[1,1],[1,2],[1,3],[2,0],[2,1],[2,2],[3,0],[4,0]]
+    possibleAnswers = []
+    teller = 0
+    noemer = 0 #moet aantal mogelijke cominaties zijn
+
+    for i in possibleAnswers: 
+        if x in possibleAnswers and  == possibleFeedback[i]
+    #for ai in possibleFeedback:
+"""
