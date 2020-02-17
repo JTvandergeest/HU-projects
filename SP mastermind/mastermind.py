@@ -41,12 +41,22 @@ def check(y, x):
     else:
         print("Dat is helaas niet de juiste code.")
 
+def litterally_guessing(y, x):
+    for i in range(0, 11):
+        for ii in range(0, 4):
+            z = random.randint(0, 5)
+            y.append(x[z])
+        print(y)
+        check(y, teGokkenCode)
+        feedback(y, teGokkenCode)
+        y.clear()
+    print("Helaas, dat was de laatste gok. De code was: ", teGokkenCode)
+
 
 def a_simple_strategy(y, z):
     possibleCombinations = []
-    # possibleFeedback = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2], [1, 3], [2, 0], [2, 1], [2, 2], [3, 0], [4, 0]]
 
-    for ii in range(6 ** 4):
+    for ii in range(6 ** 4):    #Alle mogelijke codes in een lijst zetten.
         index0 = math.floor(ii / (6 ** 3)) % 6
         index1 = math.floor(ii/ (6 ** 2)) % 6
         index2 = math.floor(ii / 6) % 6
@@ -55,11 +65,11 @@ def a_simple_strategy(y, z):
         singleCombination = (y[index0] + " " + y[index1] + " " + y[index2] + " " + y[index3]).split(" ")
         possibleCombinations.append([singleCombination])
 
-    for i in range(0, 20):
-        if len(possibleCombinations) > 2:
-            z = possibleCombinations[random.randint(0, len(possibleCombinations))][0]
+    for i in range(0, 11):
+        if len(possibleCombinations) >= 3:
+            z = possibleCombinations[0][0]#random.randint(0, len(possibleCombinations)) <--- Is om de gok willekeurig te maken, gekozen uit de overige mogelijke codes.
         else:
-            z = possibleCombinations[random.randint(0,1)][0]
+            z = possibleCombinations[0][0]
         print("Computer gok: ", z)
         if z == teGokkenCode:
             print("Dat is de juiste code, gefeliciteerd!")
@@ -68,11 +78,11 @@ def a_simple_strategy(y, z):
             print("Dat is helaas niet de juiste code.")
 
         fb = feedback(z, teGokkenCode).copy()
+        print(fb)
 
         for iii in range(len(possibleCombinations)):
             if feedback(possibleCombinations[iii][0], z) != fb:
                 possibleCombinations[iii] = 0
-        print(possibleCombinations)
 
         while 0 in possibleCombinations:
             possibleCombinations.remove(0)
@@ -108,8 +118,9 @@ def player_or_computer():
     keuze = input()
     if keuze == "x":
         geef_code(teGokkenCode)
-        #computer_gok()
-        a_simple_strategy(kleuren, gegokteCode)
+        #litterally_guessing(gegokteCode, kleuren) #Strategie van compleet willekeurig gokken, laag slagingspercentage, desalniettemin een strategie.
+        #genereer_code(teGokkenCode, kleuren) #(Voor het compleet automatiseren, naast de keuze voor wie welke rol heeft.)
+        a_simple_strategy(kleuren, gegokteCode) #Strategie, werkt door middel van het proces van eliminatie door elke mogelijke code te vergelijken met de gok op basis van de feedback op de gok.
 
     if keuze == "y":
         genereer_code(teGokkenCode, kleuren)
