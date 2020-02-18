@@ -52,13 +52,12 @@ def litterally_guessing(y, x):
         y.clear()
     print("Helaas, dat was de laatste gok. De code was: ", teGokkenCode)
 
-
 def a_simple_strategy(y, z):
     possibleCombinations = []
 
     for ii in range(6 ** 4):    #Alle mogelijke codes in een lijst zetten.
         index0 = math.floor(ii / (6 ** 3)) % 6
-        index1 = math.floor(ii/ (6 ** 2)) % 6
+        index1 = math.floor(ii / (6 ** 2)) % 6
         index2 = math.floor(ii / 6) % 6
         index3 = ii % 6
 
@@ -67,15 +66,12 @@ def a_simple_strategy(y, z):
 
     for i in range(0, 11):
         if len(possibleCombinations) >= 3:
-            z = possibleCombinations[0][0]#random.randint(0, len(possibleCombinations)) <--- Is om de gok willekeurig te maken, gekozen uit de overige mogelijke codes.
+            z = possibleCombinations[0][0]  #random.randint(0, len(possibleCombinations)) <--- Is om de gok willekeurig te maken, gekozen uit de overige mogelijke codes.
         else:
             z = possibleCombinations[0][0]
         print("Computer gok: ", z)
-        if z == teGokkenCode:
-            print("Dat is de juiste code, gefeliciteerd!")
-            exit()
-        else:
-            print("Dat is helaas niet de juiste code.")
+
+        check(z, teGokkenCode)
 
         fb = feedback(z, teGokkenCode).copy()
         print(fb)
@@ -117,9 +113,9 @@ def player_or_computer():
           "De computer geeft de code en de speler raad, typ dan 'y'. ")
     keuze = input()
     if keuze == "x":
-        geef_code(teGokkenCode)
+        #geef_code(teGokkenCode)
         #litterally_guessing(gegokteCode, kleuren) #Strategie van compleet willekeurig gokken, laag slagingspercentage, desalniettemin een strategie.
-        #genereer_code(teGokkenCode, kleuren) #(Voor het compleet automatiseren, naast de keuze voor wie welke rol heeft.)
+        genereer_code(teGokkenCode, kleuren) #(Voor het compleet automatiseren, naast de keuze voor wie welke rol heeft.)
         a_simple_strategy(kleuren, gegokteCode) #Strategie, werkt door middel van het proces van eliminatie door elke mogelijke code te vergelijken met de gok op basis van de feedback op de gok.
 
     if keuze == "y":
@@ -132,18 +128,3 @@ def play_mastermind():
 
 play_mastermind()
 
-
-
-
-
-
-"""def computer_gok(gok):
-    possibleFeedback = [[0,0],[0,1],[0,2].[0,3],[0,4],[1,0],[1,1],[1,2],[1,3],[2,0],[2,1],[2,2],[3,0],[4,0]]
-    possibleAnswers = []
-    teller = 0
-    noemer = 0 #moet aantal mogelijke cominaties zijn
-
-    for i in possibleAnswers: 
-        if x in possibleAnswers and  == possibleFeedback[i]
-    #for ai in possibleFeedback:
-"""
